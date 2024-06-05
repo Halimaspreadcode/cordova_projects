@@ -4,28 +4,68 @@ function onDeviceReady() {
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
 }
 
-function calculateBMI() {
-    var weight = document.getElementById('weight').value;
-    var height = document.getElementById('height').value;
+function ajouterTache() {
+    var taskField = document.getElementById("taskField");
+    var taskListPending = document.getElementById("taskListPending");
 
-    if (weight && height) {
-        height = height / 100; // Convert height from cm to meters
-        var bmi = weight / (height * height);
-        bmi = bmi.toFixed(2);
-
-        var resultText = '';
-        if (bmi < 18.5) {
-            resultText = 'Insuffisance pondérale';
-        } else if (bmi >= 18.5 && bmi <= 24.9) {
-            resultText = 'Corpulence normale';
-        } else if (bmi >= 25 && bmi <= 29.9) {
-            resultText = 'Surpoids';
-        } else {
-            resultText = 'Obésité';
-        }
-
-        document.getElementById('result').innerHTML = `Votre IMC est ${bmi} (${resultText})`;
-    } else {
-        document.getElementById('result').innerHTML = 'Veuillez entrer votre poids et votre taille';
+    if (taskField.value) {
+        var listItem = document.createElement("li");
+        listItem.classList.add("task");
+        listItem.innerHTML = taskField.value + '<span class="icon icon-complete"></span>';
+        $(listItem).swipe({
+            swipeRight: function() {
+                moveToCompleted(this);
+            }
+        });
+        listItem.querySelector(".icon-complete").addEventListener("click", function() {
+            moveToCompleted(listItem);
+        });
+        taskListPending.appendChild(listItem);
+        taskField.value = '';
     }
+}
+
+function moveToCompleted(listItem) {
+    var taskListCompleted = document.getElementById("taskListCompleted");
+    $(listItem).off('swipe');
+    listItem.classList.add("swipe-right");
+    setTimeout(function() {
+        listItem.classList.remove("swipe-right");
+        listItem.innerHTML = listItem.textContent + '<span class="icon icon-undo"></span>';
+        taskListCompleted.appendChild(listItem);
+        $(listItem).swipe({
+            swipeLeft: function() {
+                moveToPending(this);
+            }
+        });
+        listItem.querySelector(".icon-undo").addEventListener("click", function() {
+            moveToPending(listItem);
+        });
+    }, 300);
+}
+
+function moveToPending(listItem) {
+    var taskListPending = document.getElementById("taskListPending");
+    $(listItem).off('swipe');
+    listItem.classList.add("swipe-left");
+    setTimeout(function() {
+        listItem.classList.remove("swipe-left");
+        listItem.innerHTML = listItem.textContent + '<span class="icon icon-complete"></span>';
+        taskListPending.appendChild(listItem);
+        $(listItem).swipe({
+            swipeRight: function() {
+                moveToCompleted(this);
+            }
+        });
+        listItem.querySelector(".icon-complete").addEventListener("click", function() {
+            moveToCompleted(listItem);
+        });
+    }, 300);
+}
+
+function reinitialiserListe() {
+    var taskListPending = document.getElementById("taskListPending");
+    var taskListCompleted = document.getElementById("taskListCompleted");
+    taskListPending.innerHTML = '';
+    taskListCompleted.innerHTML = '';
 }
