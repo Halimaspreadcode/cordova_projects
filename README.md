@@ -7,7 +7,7 @@ Ce dépôt contient trois projets Cordova distincts, chacun dans sa propre branc
 1. **main** : Cette branche principale contient ce README et d'autres informations générales.
 2. **todo-app** : Cette branche contient un projet Cordova pour une application de liste de tâches.
 3. **contact-app** : Cette branche contient un projet Cordova pour une application de gestion de contacts.
-4. **bmi-calculator** : Cette branche contient un projet Cordova pour une application de calcul de l'IMC.
+4. **imc-app** : Cette branche contient un projet Cordova pour une application de calcul de l'IMC.
 
 ## Configuration de chaque projet
 
