@@ -33,9 +33,9 @@ Pour configurer et exécuter l'un de ces projets, suivez les étapes ci-dessous.
     ```
 
     Remplacez `branch-name` par l'un des suivants :
-    - `todo-app`
-    - `contact-app`
-    - `imc-app`
+    - `todoApp`
+    - `Contact-app`
+    - `Imc-app`
 
 3. Naviguez vers le répertoire du projet :
     ```sh
